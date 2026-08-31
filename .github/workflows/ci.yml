@@ -19,12 +19,14 @@ jobs:
 
   deploy-check:
     needs: test
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - name: Deploy
-        run: echo "Deploying with token $APP_TOKEN"
         env:
           APP_TOKEN: ${{ secrets.APP_TOKEN }}
+        run: |
+          echo "Deploying (token kept secret)"
+          # Use $APP_TOKEN in deployment commands below without printing it to logs
