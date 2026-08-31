@@ -2,6 +2,8 @@ name: CI
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -21,8 +23,6 @@ jobs:
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - name: Deploy
         env:
